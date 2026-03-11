@@ -21,7 +21,7 @@ const Blocks = {
   callToAction: Cta,
   infoSection: Info,
   teamSection: TeamSection,
-} as BlocksType
+} as unknown as BlocksType
 
 /**
  * Used by the <PageBuilder>, this component renders a the component that matches the block type.
