@@ -1,0 +1,83 @@
+@import 'tailwindcss';
+
+@plugin "@tailwindcss/typography";
+
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-medium tracking-tight;
+  }
+}
+
+@utility container {
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  max-width: 80rem; /* 1280px – centered content column */
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --shadow-layer: 0 35px 60px -15px rgba(0, 0, 0, 0.3);
+
+  --color-framework: #000;
+  --color-black: #0b0b0b;
+  --color-white: #fff;
+  --color-brand: #f50;
+  --color-blue: #0052ff;
+  --color-yellow: #cdea19;
+  --color-gray-50: #fafafa;
+  --color-gray-100: #eeeef1;
+  --color-gray-200: #e3e4e8;
+  --color-gray-300: #bbbdc9;
+  --color-gray-400: #9499ad;
+  --color-gray-500: #727892;
+  --color-gray-600: #515870;
+  --color-gray-700: #383d51;
+  --color-gray-800: #252837;
+  --color-gray-900: #1b1d27;
+  --color-gray-950: #13141b;
+
+  /* Healing Coral palette */
+  --color-teal: #439da5;
+  --color-teal-dark: #082422;
+  --color-teal-deep: #034e47;
+  --color-ocean: #2dd4bf;
+  --color-ocean-light: #99f6e4;
+  --color-accent: #3c2b7e;
+  --color-accent-hover: #483396;
+  --color-navy: #3c2b7e;
+  --color-navy-light: #3c2b7e;
+  --color-section: #c5f5fc;
+  --color-section-alt: #f0fdfa;
+
+  --default-transition-duration: 250ms;
+
+  --hero-gradient:
+    linear-gradient(
+      360deg,
+      rgba(60, 43, 126, 0.4) 0.95%,
+      rgba(58, 168, 193, 0.28) 41.85%,
+      rgba(153, 112, 17, 0.24) 76.33%,
+      rgba(3, 78, 71, 0) 100%
+    ),
+    linear-gradient(
+      0deg,
+      rgba(3, 78, 71, 0.54) 53.61%,
+      rgba(7, 176, 159, 0.558) 66.04%,
+      rgba(7, 176, 159, 0) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(60, 43, 126, 0.3) 2.63%,
+      rgba(58, 168, 193, 0.21) 44.58%,
+      rgba(153, 112, 17, 0.18) 79.94%,
+      rgba(3, 78, 71, 0) 104.22%
+    );
+}
