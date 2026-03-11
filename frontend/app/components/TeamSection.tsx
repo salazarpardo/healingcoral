@@ -1,7 +1,6 @@
 import Image from 'next/image'
 import {urlForImage} from '@/sanity/lib/utils'
 import {dataAttr} from '@/sanity/lib/utils'
-import type {PageBuilderSection} from '@/sanity/lib/types'
 
 type TeamMember = {
   _id: string
@@ -12,7 +11,9 @@ type TeamMember = {
   picture?: {asset?: {_ref: string}; alt?: string}
 }
 
-type TeamSectionBlock = PageBuilderSection & {
+/** Team section block shape (query includes teamSection; generated types may not yet include it) */
+type TeamSectionBlock = {
+  _key: string
   _type: 'teamSection'
   title?: string
   people?: TeamMember[]
