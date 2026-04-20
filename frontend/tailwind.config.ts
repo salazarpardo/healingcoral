@@ -1,5 +1,5 @@
-import type {Config} from 'tailwindcss'
-import typography from '@tailwindcss/typography'
+import type { Config } from 'tailwindcss';
+import typography from '@tailwindcss/typography';
 
 export default {
   content: ['./app/**/*.{ts,tsx}', './sanity/**/*.{ts,tsx}'],
@@ -9,6 +9,9 @@ export default {
       padding: '2rem',
     },
     extend: {
+      screens: {
+        nav: '900px',
+      },
       boxShadow: {
         layer: '0 35px 60px -15px rgba(0, 0, 0, 0.3)',
       },
@@ -97,10 +100,30 @@ export default {
       fontFamily: {
         sans: ['var(--font-montserrat)'],
       },
+      typography: {
+        DEFAULT: {
+          css: {
+            color: '#3C2B7E',
+            a: {
+              color: '#3C2B7E',
+              '&:hover': {
+                color: '#483396',
+              },
+            },
+            h1: {
+              color: '#3C2B7E',
+            },
+            h2: {
+              color: '#3C2B7E',
+            },
+            // Add more customizations as needed
+          },
+        },
+      },
     },
   },
   future: {
     hoverOnlyWhenSupported: true,
   },
   plugins: [typography],
-} satisfies Config
+} satisfies Config;

@@ -13,6 +13,23 @@
  */
 
 // Source: ../sanity.schema.json
+export type PersonReference = {
+  _ref: string;
+  _type: 'reference';
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: 'person';
+};
+
+export type TeamSection = {
+  _type: 'teamSection';
+  title?: string;
+  people: Array<
+    {
+      _key: string;
+    } & PersonReference
+  >;
+};
+
 export type SanityImageAssetReference = {
   _ref: string;
   _type: 'reference';
@@ -168,22 +185,26 @@ export type Button = {
   link?: Link;
 };
 
-export type Project = {
+export type Collection = {
   _id: string;
-  _type: 'project';
+  _type: 'collection';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
   title: string;
   slug: Slug;
   description?: string;
-  image?: {
+  images: Array<{
     asset?: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     _type: 'image';
-  };
+    _key: string;
+  }>;
+  viewNftsUrl?: string;
+  readMoreLink?: Link;
+  creator?: PersonReference;
   order?: number;
 };
 
@@ -207,6 +228,58 @@ export type Slug = {
   _type: 'slug';
   current: string;
   source?: string;
+};
+
+export type Project = {
+  _id: string;
+  _type: 'project';
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  slug: Slug;
+  description?: string;
+  image?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: 'image';
+  };
+  order?: number;
+};
+
+export type CollectionReference = {
+  _ref: string;
+  _type: 'reference';
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: 'collection';
+};
+
+export type CollectionsPage = {
+  _id: string;
+  _type: 'collectionsPage';
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  heroPreTitle?: string;
+  heroTitle?: string;
+  heroDescription?: string;
+  heroCta?: Button;
+  heroBackgroundImage?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: 'image';
+  };
+  introTitle?: string;
+  introBody?: string;
+  collections?: Array<
+    {
+      _key: string;
+    } & CollectionReference
+  >;
 };
 
 export type SanityFileAssetReference = {
@@ -381,14 +454,10 @@ export type Page = {
     | ({
         _key: string;
       } & InfoSection)
+    | ({
+        _key: string;
+      } & TeamSection)
   >;
-};
-
-export type PersonReference = {
-  _ref: string;
-  _type: 'reference';
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: 'person';
 };
 
 export type Post = {
@@ -421,6 +490,9 @@ export type Person = {
   _rev: string;
   firstName: string;
   lastName: string;
+  role?: string;
+  bio?: string;
+  location?: string;
   picture: {
     asset?: SanityImageAssetReference;
     media?: unknown;
@@ -666,6 +738,8 @@ export type Geopoint = {
 };
 
 export type AllSanitySchemaTypes =
+  | PersonReference
+  | TeamSection
   | SanityImageAssetReference
   | ReefPartCard
   | SocialLink
@@ -679,16 +753,18 @@ export type AllSanitySchemaTypes =
   | BlockContentTextOnly
   | BlockContent
   | Button
-  | Project
+  | Collection
   | SanityImageCrop
   | SanityImageHotspot
   | Slug
+  | Project
+  | CollectionReference
+  | CollectionsPage
   | SanityFileAssetReference
   | ProjectReference
   | HomePage
   | Settings
   | Page
-  | PersonReference
   | Post
   | Person
   | SanityAssistInstructionTask
@@ -945,7 +1021,70 @@ export type HomePageQueryResult = {
 // Source: sanity/lib/queries.ts
 // Variable: collectionsPageQuery
 // Query: *[_type == "collectionsPage"][0] {    _id,    heroPreTitle,    heroTitle,    heroDescription,    heroCta { buttonText, link { ...,   _type == "link" => {    "page": page->slug.current,    "post": post->slug.current  } } },    heroBackgroundImage,    introTitle,    introBody,    "collections": collections[]-> {      _id,      title,      "slug": slug.current,      description,      images,      viewNftsUrl,      readMoreLink { ...,   _type == "link" => {    "page": page->slug.current,    "post": post->slug.current  } },      "creator": creator-> {        _id,        firstName,        lastName,        location,        bio,        picture      }    }  }
-export type CollectionsPageQueryResult = null;
+export type CollectionsPageQueryResult = {
+  _id: string;
+  heroPreTitle: string | null;
+  heroTitle: string | null;
+  heroDescription: string | null;
+  heroCta: {
+    buttonText: string | null;
+    link: {
+      _type: 'link';
+      linkType?: 'href' | 'page' | 'post';
+      href?: string;
+      page: string | null;
+      post: string | null;
+      openInNewTab?: boolean;
+    } | null;
+  } | null;
+  heroBackgroundImage: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: 'image';
+  } | null;
+  introTitle: string | null;
+  introBody: string | null;
+  collections: Array<{
+    _id: string;
+    title: string;
+    slug: string;
+    description: string | null;
+    images: Array<{
+      asset?: SanityImageAssetReference;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: 'image';
+      _key: string;
+    }>;
+    viewNftsUrl: string | null;
+    readMoreLink: {
+      _type: 'link';
+      linkType?: 'href' | 'page' | 'post';
+      href?: string;
+      page: string | null;
+      post: string | null;
+      openInNewTab?: boolean;
+    } | null;
+    creator: {
+      _id: string;
+      firstName: string;
+      lastName: string;
+      location: string | null;
+      bio: string | null;
+      picture: {
+        asset?: SanityImageAssetReference;
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        alt?: string;
+        _type: 'image';
+      };
+    } | null;
+  }> | null;
+} | null;
 
 // Source: sanity/lib/queries.ts
 // Variable: getPageQuery
@@ -1032,6 +1171,26 @@ export type GetPageQueryResult = {
               markDefs: null;
             }
         > | null;
+      }
+    | {
+        _key: string;
+        _type: 'teamSection';
+        title?: string;
+        people: Array<{
+          _id: string;
+          firstName: string;
+          lastName: string;
+          role: string | null;
+          bio: string | null;
+          picture: {
+            asset?: SanityImageAssetReference;
+            media?: unknown;
+            hotspot?: SanityImageHotspot;
+            crop?: SanityImageCrop;
+            alt?: string;
+            _type: 'image';
+          };
+        }>;
       }
   > | null;
 } | null;

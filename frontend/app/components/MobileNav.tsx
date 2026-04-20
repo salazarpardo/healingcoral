@@ -42,7 +42,7 @@ export default function MobileNav({navItems, ctaLabel, ctaHref, logoUrl, logoAlt
       <button
         type="button"
         onClick={() => setIsOpen(true)}
-        className="sm:hidden flex flex-col justify-center w-10 h-10 text-white p-2 rounded-lg hover:bg-white/10 transition-colors"
+        className="nav:hidden flex flex-col justify-center w-10 h-10 text-white p-2 rounded-lg hover:bg-white/10 transition-colors"
         aria-label="Open menu"
         aria-expanded={isOpen}
       >
@@ -54,7 +54,7 @@ export default function MobileNav({navItems, ctaLabel, ctaHref, logoUrl, logoAlt
 
       {/* Overlay */}
       <div
-        className="sm:hidden fixed inset-0 z-50 bg-black/40 backdrop-blur-sm transition-opacity duration-300"
+        className="nav:hidden fixed inset-0 z-50 bg-black/40 backdrop-blur-sm transition-opacity duration-300"
         style={{
           opacity: isOpen ? 1 : 0,
           pointerEvents: isOpen ? 'auto' : 'none',
@@ -65,7 +65,7 @@ export default function MobileNav({navItems, ctaLabel, ctaHref, logoUrl, logoAlt
 
       {/* Drawer panel – slides in from right */}
       <div
-        className="sm:hidden fixed top-0 right-0 z-50 h-full w-[min(85vw,320px)] bg-white shadow-xl flex flex-col transition-transform duration-300 ease-out"
+        className="nav:hidden fixed top-0 right-0 z-50 h-full w-[min(85vw,320px)] bg-white shadow-xl flex flex-col transition-transform duration-300 ease-out"
         style={{
           transform: isOpen ? 'translateX(0)' : 'translateX(100%)',
         }}
