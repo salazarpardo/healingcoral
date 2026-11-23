@@ -3,6 +3,7 @@ import Image from 'next/image'
 import {sanityFetch} from '@/sanity/lib/live'
 import {collectionsPageQuery, homePageQuery} from '@/sanity/lib/queries'
 import {urlForImage, linkResolver} from '@/sanity/lib/utils'
+import type {DereferencedLink} from '@/sanity/lib/types'
 import NewsletterSection from '@/app/components/home/NewsletterSection'
 import type {HomePageData} from '@/app/components/home/types'
 
@@ -22,7 +23,7 @@ type CollectionItem = {
   description?: string
   images?: Array<{asset?: {_ref: string}}>
   viewNftsUrl?: string
-  readMoreLink?: {linkType?: string; href?: string; page?: string; post?: string}
+  readMoreLink?: DereferencedLink
   creator?: Creator
 }
 
@@ -30,7 +31,7 @@ type CollectionsPageData = {
   heroPreTitle?: string
   heroTitle?: string
   heroDescription?: string
-  heroCta?: {buttonText?: string; link?: {linkType?: string; href?: string; page?: string; post?: string}}
+  heroCta?: {buttonText?: string; link?: DereferencedLink}
   heroBackgroundImage?: {asset?: {_ref: string}}
   introTitle?: string
   introBody?: string
@@ -83,7 +84,7 @@ export default async function CollectionsPage() {
           )}
           {data?.heroCta?.buttonText && (
             <Link
-              href={data.heroCta.link ? linkResolver(data.heroCta.link as any) ?? '#' : '#'}
+              href={data.heroCta.link ? linkResolver(data.heroCta.link) ?? '#' : '#'}
               className="inline-block rounded-full bg-accent hover:bg-accent-hover px-8 py-4 text-white font-bold text-sm tracking-wide transition-colors"
             >
               {data.heroCta.buttonText}
@@ -119,7 +120,7 @@ export default async function CollectionsPage() {
               creator &&
               [creator.firstName, creator.lastName].filter(Boolean).join(' ')
             const readMoreHref = collection.readMoreLink
-              ? linkResolver(collection.readMoreLink as any)
+              ? linkResolver(collection.readMoreLink)
               : null
 
             return (

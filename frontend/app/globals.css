@@ -31,7 +31,7 @@
   --color-framework: #000;
   --color-black: #0b0b0b;
   --color-white: #fff;
-  --color-brand: #f50;
+  --color-brand: var(--color-accent);
   --color-blue: #0052ff;
   --color-yellow: #cdea19;
   --color-gray-50: #fafafa;

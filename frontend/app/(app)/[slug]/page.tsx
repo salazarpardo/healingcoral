@@ -1,5 +1,7 @@
 import type {Metadata} from 'next'
 import Head from 'next/head'
+import {draftMode} from 'next/headers'
+import {notFound} from 'next/navigation'
 
 import PageBuilderPage from '@/app/components/PageBuilder'
 import {sanityFetch} from '@/sanity/lib/live'
@@ -57,11 +59,17 @@ export default async function Page(props: Props) {
   ])
 
   if (!page?._id) {
-    return (
-      <div className="py-40">
-        <PageOnboarding />
-      </div>
-    )
+    // Keep the create-page prompt for editors inside Presentation, but give
+    // regular visitors a real 404 response.
+    const {isEnabled: isDraftMode} = await draftMode()
+    if (isDraftMode) {
+      return (
+        <div className="py-40">
+          <PageOnboarding slug={params.slug} />
+        </div>
+      )
+    }
+    notFound()
   }
 
   return (

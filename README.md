@@ -35,9 +35,9 @@ npm create sanity@latest -- --template sanity-io/sanity-template-nextjs-clean
 
 See the documentation if you are [having issues with the CLI](https://www.sanity.io/help/cli-errors).
 
-#### 2. Run Studio and Next.js app locally
+#### 2. Run the Next.js app locally
 
-Navigate to the template directory using `cd <your app name>`, and start the development servers by running the following command
+Navigate to the template directory using `cd <your app name>`, and start the development server by running the following command
 
 ```shell
 npm run dev
@@ -47,7 +47,7 @@ npm run dev
 
 Open the Next.js app running locally in your browser on [http://localhost:3000](http://localhost:3000).
 
-Open the Studio running locally in your browser on [http://localhost:3333](http://localhost:3333). You should now see a screen prompting you to log in to the Studio. Use the same service (Google, GitHub, or email) that you used when you logged in to the CLI.
+The Sanity Studio is embedded in the Next.js app at [http://localhost:3000/studio](http://localhost:3000/studio). You should now see a screen prompting you to log in to the Studio. Use the same service (Google, GitHub, or email) that you used when you logged in to the CLI.
 
 ### Adding content with Sanity
 
@@ -73,15 +73,9 @@ The schema for the `Post` document type is defined in the `studio/src/schemaType
 
 ### Deploying your application and inviting editors
 
-#### 1. Deploy Sanity Studio
+#### 1. Deploy the Next.js app (includes Sanity Studio)
 
-Your Next.js frontend (`/frontend`) and Sanity Studio (`/studio`) are still only running on your local computer. It's time to deploy and get it into the hands of other content editors.
-
-Back in your Studio directory (`/studio`), run the following command to deploy your Sanity Studio.
-
-```shell
-npx sanity deploy
-```
+The Studio is embedded in the Next.js app at `/studio`, so deploying the frontend deploys the Studio too. Set `NEXT_PUBLIC_SANITY_PREVIEW_URL` to your deployed frontend URL so Presentation Tool previews the correct origin.
 
 #### 2. Deploy Next.js app to Vercel
 

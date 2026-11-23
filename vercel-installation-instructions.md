@@ -57,15 +57,9 @@ npm run import-sample-data
 
 ## Step 6. Deploy Sanity Studio
 
-Deploy the Studio so your team can access it online:
+The Studio is embedded in the Next.js app at `/studio`, so it deploys with the frontend. There is no separate `sanity deploy` step.
 
-```shell
-cd studio && npx sanity deploy
-```
-
-You will be prompted to choose a hostname (e.g., `your-project.sanity.studio`).
-
-After deploying, update the `NEXT_PUBLIC_SANITY_STUDIO_URL` environment variable in your Vercel project settings to point to your deployed Studio URL (e.g., `https://your-project.sanity.studio`).
+Set `NEXT_PUBLIC_SANITY_PREVIEW_URL` to your deployed frontend URL (e.g., `https://your-app.vercel.app`) so Presentation Tool previews the correct origin. `NEXT_PUBLIC_SANITY_STUDIO_URL` defaults to `/studio`.
 
 ## Step 7. Invite collaborators (optional)
 
